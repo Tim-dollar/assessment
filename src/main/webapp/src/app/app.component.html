@@ -1,0 +1,124 @@
+
+<div class="container">
+ <div class="jumbrotron ">
+     <h1 class="text-center"> Vending App</h1>
+ </div>
+   <div class="row whole-machine">
+                   
+    <table class="table table-responsive col-sm-offset-2 col-sm-6 ">
+        <tr *ngFor="let item of Items ;let i = index">
+            <td >
+          
+                <h4>Item</h4>
+              <h5> yeah yeah</h5>
+              <p></p>
+          
+            </td>
+        </tr>
+    </table>
+                   
+    <div class="loadingItems col-sm-6 col-sm-offset-3" *ngIf="loadingItems" >
+       <h1 >Loading Items</h1>
+        <mat-progress-spinner
+        class="example-margin text-center"
+        color="primary"
+        mode="indeterminate"
+        value=50>
+    </mat-progress-spinner>
+</div>
+                    <div class="col-sm-offset-2 col-sm-6 machine" *ngIf="!loadingItems">
+                       
+                        <div *ngFor="let item of items; let i = index">
+                            <div class="clearfix" *ngIf="i % 3 == 0"></div>
+                            <div class="shelf" *ngIf="i % 3 == 0 "></div>
+                            <div class="col-xs-4">
+                                <div [ngClass]="{'item-style-out': item.inventory === 0, 'item-style': item.inventory > 0}" class="text-center">{{ item.itemName}}<p>{{  item.inventory }}</div>
+                                <div class="item-price">
+                                    <span> {{ location[i] }} </span>
+                                    <span class="pull-right">{{ item.cost | currency : 'ZAR':true }} </span>
+                                </div>
+                            </div>
+                            <div class="clearfix" *ngIf="$last"></div>
+                            <div class="shelf" *ngIf="$last"></div>
+                        </div>
+                        
+                    </div> 
+                                     
+    <div class="loadingCoins col-sm-4 machine-input" *ngIf="loadingCoins" >
+        <h1 >Loading  Coins</h1>
+         <mat-progress-spinner
+         class="example-margin text-center"
+         color="primary"
+         mode="indeterminate"
+         value=50>
+     </mat-progress-spinner>
+ </div>
+                    <div class="col-sm-4 machine-input" *ngIf="!loadingCoins">
+                        <div class="row">
+                            <div class="btn-group" role="group" aria-label="..." *ngFor="let coin of coins">
+                                <button type="button" class="btn btn-default" (click)="insertCoin(coin.denomination)">{{coin.denomination | currency : 'ZAR':true}}</button>
+                         
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-xs-6">
+                                    <input type="text" class="change-input form-control" readonly value="{{ credit| currency:'ZAR':true }}" />
+                                </div>
+                                <div class="col-xs-6">
+                                    <input type="text" class="change-input form-control" readonly value="{{ status}}" />
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="btn-toolbar" role="toolbar" aria-label="">
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-default " (click)="dispenseChange()">Change</button>
+                                    <button type="button" class="btn btn-default load-button" (click)="loadItems()"> Load Items</button><div [class.loader-hidden]="show">
+                                            <div class="loader-overlay">
+                                                    <div>
+                                                        <mat-progress-bar mode="indeterminate" *ngIf="show"></mat-progress-bar>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-default load-button" (click)="loadCoins()">Load Coins</button>
+                                    <button type="button" class="btn btn-default load-button" (click)="ngOnInit()"> Refresh All</button>
+                                </div>
+                                <div class="btn-group" role="group" aria-label="">
+                                    <button type="button" class="btn btn-default btn-lg" (click)="selectItem(0)">A1</button>
+                                    <button type="button" class="btn btn-default btn-lg" (click)="selectItem(1)">A2</button>
+                                    <button type="button" class="btn btn-default btn-lg" (click)="selectItem(2)">A3</button>
+                                </div>
+                                <div class="btn-group" role="group" aria-label="">
+                                    <button type="button" class="btn btn-default btn-lg" (click)="selectItem(3)">B1</button>
+                                    <button type="button" class="btn btn-default btn-lg" (click)="selectItem(4)">B2</button>
+                                    <button type="button" class="btn btn-default btn-lg" (click)="selectItem(5)">B3</button>
+                                </div>
+                                <div class="btn-group" role="group" aria-label="">
+                                    <button type="button" class="btn btn-default btn-lg" (click)="selectItem(6)">C1</button>
+                                    <button type="button" class="btn btn-default btn-lg" (click)="selectItem(7)">C2</button>
+                                    <button type="button" class="btn btn-default btn-lg" (click)="selectItem(8)">C3</button>
+                                </div>
+                                <div class="btn-group" role="group" aria-label="">
+                                    <button type="button" class="btn btn-default btn-lg" (click)="selectItem(9)">D1</button>
+                                    <button type="button" class="btn btn-default btn-lg" (click)="selectItem(10)">D2</button>
+                                    <button type="button" class="btn btn-default btn-lg"(click)="selectItem(11)">D3</button>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="row vend-door-black">
+                            <div *ngIf="OpenDoor" class="vend-door"></div>
+                           <div *ngIf="BoughtItem" class="item-style-vend text-center" (click)="removeBoughtItem()">{{ BoughtItemName }}</div>
+                            
+                        </div>
+                       
+                    </div>
+                    
+  
+
+
+</div>
